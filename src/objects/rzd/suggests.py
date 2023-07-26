@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 
-from src.rzd import split_numbers_list, model_config
+from src.objects.rzd import split_numbers_list, model_config
 
 
 class Point(BaseModel):

@@ -1,9 +1,10 @@
+from datetime import datetime
 from pydantic import BaseModel, field_validator
 
-from src.rzd import model_config
-from src.rzd.cars import Car
-from src.rzd.stations import Station
-from src.rzd.trains import Train, TrainPreview
+from src.objects.rzd import model_config
+from src.objects.rzd.cars import Car
+from src.objects.rzd.stations import Station
+from src.objects.rzd.trains import Train, TrainPreview
 
 
 class CarPricing(BaseModel):
@@ -46,4 +47,4 @@ class TrainPricing(BaseModel):
     id: int
     destinationStationName: str
     originStationName: str
-    moscowDateTime: str
+    moscowDateTime: datetime

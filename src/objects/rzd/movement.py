@@ -1,7 +1,7 @@
 from pydantic import BaseModel, field_validator
 
-from src.rzd import model_config
-from src.rzd.stations import Station
+from src.objects.rzd import model_config
+from src.objects.rzd.stations import Station
 
 
 class ActualMovement(BaseModel):

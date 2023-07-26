@@ -1,6 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 
-from src.rzd import model_config
+from src.objects.rzd import model_config
 
 
 class BaggageType(BaseModel):

@@ -1,9 +1,10 @@
+from datetime import datetime
 from pydantic import BaseModel, field_validator
 
-from src.rzd import model_config
-from src.rzd.cars import CarGroup
-from src.rzd.movement import ActualMovement
-from src.rzd.stations import Station
+from src.objects.rzd import model_config
+from src.objects.rzd.cars import CarGroup
+from src.objects.rzd.movement import ActualMovement
+from src.objects.rzd.stations import Station
 
 
 class TrainPreview(BaseModel):
@@ -30,13 +31,13 @@ class TrainPreview(BaseModel):
     finalTrainStationCnsiCode: str
     destinationNames: list[str]
     finalStationNames: list[str]
-    departureDateTime: str
-    localDepartureDateTime: str
-    arrivalDateTime: str
-    localArrivalDateTime: str
-    arrivalDateTimes: list[str]
-    localArrivalDateTimes: list[str]
-    departureDateFromFormingStation: str
+    departureDateTime: datetime
+    localDepartureDateTime: datetime
+    arrivalDateTime: datetime
+    localArrivalDateTime: datetime
+    arrivalDateTimes: list[datetime]
+    localArrivalDateTimes: list[datetime]
+    departureDateFromFormingStation: datetime
     departureStopTime: int
     arrivalStopTime: int
     tripDuration: float

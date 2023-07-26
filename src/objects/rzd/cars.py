@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from pydantic import BaseModel, field_validator
 
-from src.rzd import model_config
-from src.rzd.baggage import BaggageType
-from src.rzd.discounts import Discount
-from src.rzd.places import FreePlacesByCompartment
+from src.objects.rzd import model_config
+from src.objects.rzd.baggage import BaggageType
+from src.objects.rzd.discounts import Discount
+from src.objects.rzd.places import FreePlacesByCompartment
 
 
 class CarGroup(BaseModel):
@@ -93,8 +95,8 @@ class Car(BaseModel):
     hasGenderCabins: bool
     rzhdCardTypes: list[str]
     trainNumber: str
-    arrivalDateTime: str
-    localArrivalDateTime: str
+    arrivalDateTime: datetime
+    localArrivalDateTime: datetime
     hasNoInterchange: bool
     hasPlaceNumeration: bool
     isBeddingSelectionPossible: bool

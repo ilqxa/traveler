@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 
-from src.rzd import model_config
+from src.objects.rzd import model_config
 
 
 class Station(BaseModel):
