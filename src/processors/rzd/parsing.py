@@ -13,7 +13,7 @@ allowedResponses = SuggestsRequest.responseType | TrainPricingRequest.responseTy
 
 def make_a_request(req: allowedRequests, session: Session | None = None) -> allowedResponses:
     if not session: session = Session()
-    requestData = req.model_dump(exclude={'responseType'}, by_alias=True)
+    requestData = req.model_dump(by_alias=True)
     
     respRaw = session.request(**requestData)
     if respRaw.status_code != 200: raise RequestException()
