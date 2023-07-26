@@ -4,10 +4,8 @@ from src.objects.rzd import split_numbers_list, model_config
 
 
 class Point(BaseModel):
-    model_config = model_config
-    
     nodeId: str
-    expressCode: str
+    expressCode: str | None = None
     name: str
     nodeType: str
     transportType: str
@@ -16,17 +14,15 @@ class Point(BaseModel):
     countryIso: str
     aviaCode: str | None = None
     busCode: str | None = None
-    suburbanCode: list[str]
-    foreignCode: str
+    suburbanCode: list[str] | None = None
+    foreignCode: str | None = None
     expressCodes: list[str] | None = None
     hasAeroExpress: bool
     
     split_codes = field_validator('suburbanCode', 'expressCodes', mode='before')(split_numbers_list)
 
 
-class Suggests(BaseModel):
-    model_config = model_config
-    
+class Suggests(BaseModel):    
     city: list[Point]
     train: list[Point]
     avia: list[Point]

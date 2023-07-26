@@ -1,5 +1,7 @@
+from typing import ClassVar
 from pydantic import BaseModel, Field
 
+from src.objects.rzd.prices import TrainPricing
 from src.queries.rzd.common import CommonRequest
 
 
@@ -19,6 +21,8 @@ class TrainPricingRequestPayload(BaseModel):
 
 
 class TrainPricingRequest(CommonRequest):
-    url: str = Field(default='https://ticket.rzd.ru/apib2b/p/Railway/V1/Search/TrainPricing')
+    url: str = Field(default='https://ticket.rzd.ru/apib2b/p/Railway/V1/Search/TrainPricing', frozen=True)
+    method: str = Field(default='POST', frozen=True)
     params: TrainPricingQueryParams
-    json: TrainPricingRequestPayload
+    payload: TrainPricingRequestPayload = Field(alias='json')
+    responseType: ClassVar = TrainPricing
