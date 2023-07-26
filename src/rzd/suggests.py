@@ -1,8 +1,11 @@
 from pydantic import BaseModel, field_validator
 
+from src.rzd import split_numbers_list, model_config
 
 
 class Point(BaseModel):
+    model_config = model_config
+    
     nodeId: str
     expressCode: str
     name: str
@@ -18,13 +21,12 @@ class Point(BaseModel):
     expressCodes: list[str] | None = None
     hasAeroExpress: bool
     
-    @field_validator('suburbanCode', 'expressCodes', mode='before')
-    def split_codes(cls, codes: str | None) -> list[int]:
-        if not codes: return []
-        else: return [int(c) for c in codes.split(',')]
+    split_codes = field_validator('suburbanCode', 'expressCodes', mode='before')(split_numbers_list)
 
 
 class Suggests(BaseModel):
+    model_config = model_config
+    
     city: list[Point]
     train: list[Point]
     avia: list[Point]

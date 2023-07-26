@@ -1,12 +1,16 @@
 from pydantic import BaseModel, field_validator
 
+from src.rzd import model_config
+
 
 class Station(BaseModel):
-    NameRu: str | None
-    NameEn: str | None
-    StationName: str | None
-    StationCode: str | None
-    RegionName: str | None
-    IsoCode: str | None
-    ExpressCode: str | None
-    CnsiCode: str | None
+    model_config = model_config
+    
+    nameRu: str | None
+    nameEn: str | None
+    stationName: str | None
+    stationCode: str | None
+    regionName: str | None
+    isoCode: str | None
+    expressCode: str | None
+    cnsiCode: str | None

@@ -1,8 +1,12 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, ConfigDict
+
+from src.rzd import model_config
 
 
 class BaggageType(BaseModel):
-    Type: str | None
-    Name: str | None
-    Description: str | None
-    CarBaggageInfo: str | None
+    model_config = model_config
+    
+    type: str | None
+    name: str | None
+    description: str | None
+    carBaggageInfo: str | None
