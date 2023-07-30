@@ -3,14 +3,28 @@ from datetime import datetime
 
 from pydantic import BaseModel
 
+from src.objects.api.route import RoutePoint
+
 
 class UserRequest(ABC, BaseModel):
     author: str
 
 
-class SelectDepartureCity(UserRequest):
+class AddRoutePoint(UserRequest):
     cityName: str
+    isFirst: bool = False
+    isLast: bool = False
 
 
-class SelectDestinationCity(UserRequest):
-    cityName: str
+class EditRoutePoint(UserRequest):
+    routePoint: RoutePoint
+    needToBeFirst: bool | None = None
+    needToBeLast: bool | None = None
+
+
+class RemoveRoutePoint(UserRequest):
+    routePoint: RoutePoint
+
+
+class ReadRoutePoints(UserRequest):
+    ...
