@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator
 
-from src.objects.rzd import model_config
+from src.objects.rzd import model_config, split_numbers_list
 
 
 class FreePlacesByCompartment(BaseModel):
@@ -8,3 +8,5 @@ class FreePlacesByCompartment(BaseModel):
     
     compartmentNumber: str
     places: list[str]
+    
+    split_codes = field_validator('places', mode='before')(split_numbers_list)

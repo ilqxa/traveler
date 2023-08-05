@@ -51,7 +51,7 @@ class TrainPreview(BaseModel):
     isVrStorageSystem: bool
     placesStorageType: str
     boardingSystemTypes: list[str]
-    trainBrandCode: str
+    trainBrandCode: str | None
 
 
 class Train(TrainPreview):
@@ -61,7 +61,7 @@ class Train(TrainPreview):
     isFromSchedule: bool
     isTourPackagePossible: bool
     carTransportationsFreePlacesCount: None
-    actualMovement: ActualMovement
+    actualMovement: ActualMovement | None
     categoryId: None
     scheduleId: None
     provider: str

@@ -10,6 +10,9 @@ from src.objects.rzd.trains import Train, TrainPreview
 class CarPricing(BaseModel):
     model_config = model_config
     
+    def __hash__(self) -> int:
+        return hash(self.model_dump_json())
+    
     originCode: str
     destinationCode: str
     originTimeZoneDifference: int
@@ -27,11 +30,14 @@ class CarPricing(BaseModel):
 class TrainPricing(BaseModel):
     model_config = model_config
     
+    def __hash__(self) -> int:
+        return hash(self.model_dump_json())
+    
     originStationCode: str
     destinationStationCode: str
     trains: list[Train]
-    clientFeeCalculation: bool
-    agentFeeCalculation: bool
+    clientFeeCalculation: bool | None
+    agentFeeCalculation: bool | None
     originCode: str
     originStationInfo: Station
     originTimeZoneDifference: int

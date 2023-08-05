@@ -23,6 +23,6 @@ class Point(BaseModel):
 
 
 class Suggests(BaseModel):    
-    city: list[Point]
-    train: list[Point]
-    avia: list[Point]
+    city: list[Point] | None = None
+    train: list[Point] | None = None
+    avia: list[Point] | None = None

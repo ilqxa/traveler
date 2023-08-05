@@ -2,10 +2,9 @@ from pydantic import BaseModel, ConfigDict
 
 
 def split_numbers_list(joinedList: str | None) -> list[str]:
-    if joinedList:
-        return joinedList.split(',')
-    else:
-        return []
+    if joinedList is None: return []
+    sep = ', ' if joinedList.find(' ') == -1 else ','
+    return joinedList.split(sep)
 
 
 def capitalize_first_symbol(text: str) -> str:

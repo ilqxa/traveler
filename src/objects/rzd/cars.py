@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, field_validator
 
-from src.objects.rzd import model_config
+from src.objects.rzd import model_config, split_numbers_list
 from src.objects.rzd.baggage import BaggageType
 from src.objects.rzd.discounts import Discount
 from src.objects.rzd.places import FreePlacesByCompartment
@@ -29,7 +29,7 @@ class CarGroup(BaseModel):
     mixedCabinQuantity: int
     isSaleForbidden: bool
     availabilityIndication: str
-    carDescriptions: list[str]
+    carDescriptions: list[str | None]
     serviceClassNameRu: str | None
     serviceClassNameEn: str | None
     internationalServiceClasses: list[str]
@@ -65,6 +65,8 @@ class CarGroup(BaseModel):
 
 
 class Car(BaseModel):
+    model_config = model_config
+    
     destinationStationCode: str
     carType: str
     carDirection: str
@@ -77,7 +79,7 @@ class Car(BaseModel):
     serviceClassNameRu: str | None
     serviceClassNameEn: str | None
     internationalServiceClass: str
-    carDescription: str
+    carDescription: str | None
     serviceClassTranscript: str
     freePlaces: list[str]
     freePlacesByCompartments: list[FreePlacesByCompartment]
@@ -140,3 +142,5 @@ class Car(BaseModel):
     carPlaceName: str
     hasFssBenefit: bool
     serviceClassName: str
+    
+    split_codes = field_validator('freePlaces', mode='before')(split_numbers_list)
