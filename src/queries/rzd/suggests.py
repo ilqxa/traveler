@@ -1,5 +1,5 @@
 from typing import ClassVar
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from src.objects.rzd.suggests import Suggests
 from src.queries.rzd.common import CommonRequest
@@ -14,6 +14,8 @@ class SuggestsQueryParams(BaseModel):
 
 
 class SuggestsRequest(CommonRequest):
+    model_config = ConfigDict(frozen=True)
+    
     url: str = Field(default='https://ticket.rzd.ru/api/v1/suggests', frozen=True)
     method: str = Field(default='GET', frozen=True)
     params: SuggestsQueryParams
