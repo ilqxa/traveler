@@ -1,24 +1,40 @@
-from typing import Any
+from itertools import permutations
 
-import requests
-from requests import Session
-from requests import RequestException
+from src.objects.opt.edges import PathSection
+from src.objects.opt.nodes import PathPoint
+from src.objects.opt.requirements import TourRequirements
+from src.objects.opt.places import TrainPlace
+from src.objects.rzd.cars import Car
+from src.objects.rzd.prices import CarPricing
 
-from src.queries.rzd.car_pricing import CarPricingRequest
-from src.queries.rzd.suggests import SuggestsRequest
-from src.queries.rzd.train_pricing import TrainPricingRequest
+
+def points_to_city_codes(
+    nodes: set[PathPoint],
+) -> set[tuple[str, str]]:
+    return {
+        (pointFrom.cityCode, pointTo.cityCode)
+        for pointFrom, pointTo in permutations(nodes, r=2)
+    }
 
 
-def make_a_request(
-    req: SuggestsRequest | TrainPricingRequest | CarPricingRequest,
-    session: Session | None = None
-) -> SuggestsRequest.responseType | TrainPricingRequest.responseType | CarPricingRequest.responseType:
-    if not session: session = Session()
-    requestData = req.model_dump(by_alias=True)
+def car_pricing_to_places(
+    carPricing: CarPricing,
+) -> set[TrainPlace]:
+    places: set[TrainPlace] = set()
+    for c in carPricing.cars:
+        if c.carTypeName not in ['КУПЕ', 'ПЛАЦ']: continue
+        for fpc in c.freePlacesByCompartments:
+            for p in fpc.places:
+                places.add(TrainPlace(
+                    trainNumber = c.trainNumber,
+                    carNumber = c.carNumber,
+                    compartmentNumber = fpc.compartmentNumber,
+                    placeNumber = p,
+                    carType = c.carTypeName, # type: ignore
+                    price = c.maxPrice,
+                    isLower = 'нижнее' in c.carPlaceName.lower(),
+                    isSide = 'боковое' in c.carPlaceName.lower(),
+                    isNearToilet = 'последнее' in c.carPlaceName.lower(),
+                ))
     
-    respRaw = session.request(**requestData)
-    if respRaw.status_code != 200: raise RequestException()
-    
-    respParsed = req.responseType.model_validate_json(respRaw.text)
-    session.close()
-    return respParsed
+    return places
